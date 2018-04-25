@@ -139,7 +139,8 @@ class RedisSessionInterface(SessionInterface):
         return self.session_class(sid=sid, permanent=self.permanent)
 
     def save_session(self, app, session, response):
-        domain = self.get_cookie_domain(app)
+        domain = session.get('domain', self.get_cookie_domain(app))
+
         path = self.get_cookie_path(app)
         if not session:
             if session.modified:
